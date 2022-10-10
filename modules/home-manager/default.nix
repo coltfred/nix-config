@@ -31,6 +31,8 @@ let
     vulnix # check for live nix apps that are listed in NVD
     nix-tree # explore dependencies
     pstree
+    btop
+    openjdk17
   ];
   # below is to make compiling tools/projects without dedicated nix environments more likely to succeed
   cPkgs = with pkgs.stable; [
@@ -388,7 +390,7 @@ in {
   programs.git = {
     enable = true;
     userName = "Colt Frederickson";
-    userEmail = "colt.frederickson@ironcorelabs.com";
+    userEmail = "coltfred@gmail.com";
     aliases = {
       gone = ''
         ! git fetch -p && git for-each-ref --format '%(refname:short) %(upstream:track)' | awk '$2 == "[gone]" {print $1}' | xargs -r git branch -D'';
@@ -448,6 +450,48 @@ in {
     };
     #ignores = [ ".cargo" ];
     ignores = import ./dotfiles/gitignore.nix;
+  };
+
+    programs.alacritty = {
+    enable = true;
+    settings = {
+      window.decorations = "full";
+      window.dynamic_title = true;
+      #background_opacity = 0.9;
+      window.opacity = 0.9;
+      scrolling.history = 3000;
+      scrolling.smooth = true;
+      font.normal.family = "MesloLGS Nerd Font Mono";
+      font.normal.style = "Regular";
+      font.bold.style = "Bold";
+      font.italic.style = "Italic";
+      font.bold_italic.style = "Bold Italic";
+      font.size = if pkgs.stdenvNoCC.isDarwin then 16 else 9;
+      shell.program = "${pkgs.zsh}/bin/zsh";
+      live_config_reload = true;
+      cursor.vi_mode_style = "Underline";
+      draw_bold_text_with_bright_colors = true;
+      key_bindings = [
+        {
+          key = "Escape";
+          mods = "Control";
+          mode = "~Search";
+          action = "ToggleViMode";
+        }
+        # cmd-{ and cmd-} and cmd-] and cmd-[ will switch tmux windows
+        {
+          key = "LBracket";
+          mods = "Command";
+          # \x02 is ctrl-b so sequence below is ctrl-b, h
+          chars = "\\x02h";
+        }
+        {
+          key = "RBracket";
+          mods = "Command";
+          chars = "\\x02l";
+        }
+      ];
+    };
   };
 
 }

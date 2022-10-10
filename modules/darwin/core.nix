@@ -1,6 +1,20 @@
 { inputs, config, pkgs, ... }:
 let prefix = "/run/current-system/sw/bin";
 in {
+
+  services = {
+    postgresql = {
+      enable = true;
+      package = (pkgs.postgresql.withPackages (p: [ p.postgis ]) );
+      dataDir = "/Users/benkio/postgresDataDir";
+    };
+  };
+
+  launchd.user.agents.postgresql.serviceConfig = {
+    StandardErrorPath = "/Users/benkio/postgres.error.log";
+    StandardOutPath = "/Users/benkio/postgres.log";
+  };
+
   # environment setup
   environment = {
     loginShell = pkgs.stable.zsh;
@@ -130,7 +144,6 @@ in {
     nerdfonts
     vegur
     noto-fonts
-    vistafonts # needed for msoffice
   ];
   nix.nixPath = [ "darwin=/etc/${config.environment.etc.darwin.target}" ];
   nix.extraOptions = ''

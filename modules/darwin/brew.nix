@@ -15,7 +15,6 @@
       "homebrew/cask-fonts"
       "homebrew/core"
       "homebrew/services"
-      "koekeishiya/formulae"
       "homebrew/cask-drivers" # for flipper zero
     ];
 
@@ -26,7 +25,6 @@
       "firefox"
       "imageoptim"
       "qlmarkdown"
-      "qlvideo"
       "signal"
       "spotify"
       "zoom"

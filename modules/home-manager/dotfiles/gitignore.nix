@@ -121,6 +121,7 @@
   ".cproject"
   ".depend"
   ".deps"
+  ".direnv"
   ".dirstamp"
   ".dotcloud"
   ".dropbox"
