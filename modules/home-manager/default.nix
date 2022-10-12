@@ -392,6 +392,8 @@ in {
     userName = "Colt Frederickson";
     userEmail = "coltfred@gmail.com";
     aliases = {
+      cb = "!f() { git checkout -b $1 && git push --set-upstream origin $1; }; f";
+      pp = "!echo 'Pulling' && git pull && echo '' && echo 'Pushing' && git push";
       gone = ''
         ! git fetch -p && git for-each-ref --format '%(refname:short) %(upstream:track)' | awk '$2 == "[gone]" {print $1}' | xargs -r git branch -D'';
       tatus = "status";
