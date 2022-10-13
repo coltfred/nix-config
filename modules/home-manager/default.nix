@@ -33,6 +33,7 @@ let
     pstree
     btop
     openjdk17
+    pkgs.unstable.ironhide
   ];
   # below is to make compiling tools/projects without dedicated nix environments more likely to succeed
   cPkgs = with pkgs.stable; [

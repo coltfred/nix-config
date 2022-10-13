@@ -14,6 +14,7 @@
     darwin.inputs.nixpkgs.follows = "nixpkgs-unstable";
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs-unstable";
+    ironhide.url = "git+ssh://git@github.com/IronCoreLabs/ironhide-rs?ref=main";
   };
 
   outputs = inputs@{ self, darwin, nixpkgs, nixpkgs-stable, nixpkgs-unstable
@@ -50,6 +51,9 @@
           unstable = import nixpkgs-unstable {
             inherit (prev.stdenv) system;
             inherit (nixpkgsConfig) config;
+          } // {
+            ironhide =
+              inputs.ironhide.packages.${prev.stdenv.system}.ironhide-rs;
           };
         };
         apple-silicon = _: prev:
