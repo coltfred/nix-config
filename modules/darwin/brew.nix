@@ -23,6 +23,7 @@
       "discord"
       "docker"
       "firefox"
+      "insomnia"
       "imageoptim"
       "qlmarkdown"
       "signal"
