@@ -157,11 +157,6 @@ in {
     nix-direnv.enable = true;
   };
 
-  # I really don't use VSCode. I try it now and then to see what I think.
-  # My setup uses Neovim in the background whenever you go to Normal mode.
-  # But it is a little bit buggy and though it's slightly prettier, not
-  # currently worth it. I'm still keeping it in because of pair programming
-  # stuff for that rare occasion.
   programs.vscode = {
     enable = true;
     mutableExtensionsDir =
@@ -211,8 +206,6 @@ in {
       "editor.fontSize" = 12;
       "editor.formatOnSave" = true;
       "editor.suggestSelection" = "first";
-      "editor.scrollbar.horizontal" = "hidden";
-      "editor.scrollbar.vertical" = "hidden";
       "editor.scrollBeyondLastLine" = false;
       "editor.cursorBlinking" = "solid";
       "editor.minimap.enabled" = false;
@@ -455,7 +448,7 @@ in {
     ignores = import ./dotfiles/gitignore.nix;
   };
 
-    programs.alacritty = {
+  programs.alacritty = {
     enable = true;
     settings = {
       window.decorations = "full";
@@ -495,6 +488,36 @@ in {
         }
       ];
     };
+  };
+
+  programs.tmux = {
+    enable = true;
+    keyMode = "vi";
+    shell = "${pkgs.zsh}/bin/zsh";
+    historyLimit = 10000;
+    escapeTime = 0;
+    extraConfig = builtins.readFile ./dotfiles/tmux.conf;
+    sensibleOnTop = true;
+    plugins = with pkgs; [
+      tmuxPlugins.sensible
+      tmuxPlugins.open
+      {
+        plugin = tmuxPlugins.fzf-tmux-url;
+        # default key bind is ctrl-b, u
+        extraConfig = ''
+          set -g @fzf-url-history-limit '2000'
+          set -g @open-S 'https://www.duckduckgo.com/'
+        '';
+      }
+      {
+        plugin = tmuxPlugins.resurrect;
+        extraConfig = ''
+          set -g @resurrect-strategy-nvim 'session'
+          set -g @resurrect-processes ': all:'
+          set -g @resurrect-capture-pane-contents 'on'
+        '';
+      }
+    ];
   };
 
 }

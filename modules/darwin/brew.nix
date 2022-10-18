@@ -26,6 +26,7 @@
       "insomnia"
       "imageoptim"
       "qlmarkdown"
+      "raycast"
       "signal"
       "spotify"
       "zoom"
