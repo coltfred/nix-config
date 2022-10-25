@@ -34,6 +34,7 @@ let
     btop
     openjdk17
     pkgs.unstable.ironhide
+    google-cloud-sdk
   ];
   # below is to make compiling tools/projects without dedicated nix environments more likely to succeed
   cPkgs = with pkgs.stable; [
@@ -519,5 +520,7 @@ in {
       }
     ];
   };
+
+  programs.go.enable = true;
 
 }
