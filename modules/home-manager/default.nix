@@ -450,6 +450,7 @@ in {
   };
 
   programs.alacritty = {
+    package = pkgs.stable.alacritty; # added 2022-11-02 because of mesa build break TODO: remove
     enable = true;
     settings = {
       window.decorations = "full";
@@ -522,5 +523,4 @@ in {
   };
 
   programs.go.enable = true;
-
 }
