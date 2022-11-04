@@ -1,4 +1,4 @@
-{ pkgs, config, username, nixpkgs-stable, nixpkgs-unstable, ... }: {
+{ pkgs, config, username, nixpkgs, nixpkgs-unstable, ... }: {
   time.timeZone = "America/Denver";
   programs.zsh = {
     enable = true;
@@ -10,7 +10,7 @@
   environment = {
     etc = {
       nixpkgs.source = "${nixpkgs-unstable}";
-      stable.source = "${nixpkgs-stable}";
+      stable.source = "${nixpkgs}";
     };
     # list of acceptable shells in /etc/shells
     shells = with pkgs; [ bash zsh ];

@@ -53,20 +53,20 @@
     "home-manager": {
       "inputs": {
         "nixpkgs": [
-          "nixpkgs-unstable"
-        ],
-        "utils": "utils"
+          "nixpkgs"
+        ]
       },
       "locked": {
-        "lastModified": 1667468181,
-        "narHash": "sha256-806/nrDW6e7bl4/oJEdAykYz/NaBuTUi7EUYArw2oic=",
+        "lastModified": 1667469118,
+        "narHash": "sha256-2YrDEmeYKCDOCuDDrjHoaUOVO3hyh9cIrWAJET1HPg8=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "93335810751f0404fe424e61ad58bc8e94bf8e9d",
+        "rev": "d78b3488a76d251701ab58a9b7f0dd092b806c1e",
         "type": "github"
       },
       "original": {
         "owner": "nix-community",
+        "ref": "release-22.05",
         "repo": "home-manager",
         "type": "github"
       }
@@ -108,18 +108,18 @@
         "type": "github"
       }
     },
-    "nixpkgs-stable": {
+    "nixpkgs-master": {
       "locked": {
-        "lastModified": 1667550113,
-        "narHash": "sha256-WcFfEHvOTVP/oa1L4DY9wqoGMaz1vnehLccQ4QYytw8=",
+        "lastModified": 1667577967,
+        "narHash": "sha256-8CL1G8j82L89MCoslbsS3nIerrU1Y1vxdEu/bXVawCw=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "bf8564890dfbc86aee93c080470389b00a57d498",
+        "rev": "1d44854eb5de4a10a3057c9901e1e611ef599b8e",
         "type": "github"
       },
       "original": {
         "owner": "nixos",
-        "ref": "nixpkgs-22.05-darwin",
+        "ref": "master",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -158,16 +158,16 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1667568241,
-        "narHash": "sha256-h7HbXs2J228yXxP9P7qFuisZtuDn7e5KHJ8x0VkiZD8=",
+        "lastModified": 1667550113,
+        "narHash": "sha256-WcFfEHvOTVP/oa1L4DY9wqoGMaz1vnehLccQ4QYytw8=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "1d9b90504041a0d8ade1e5197b11463c147eb237",
+        "rev": "bf8564890dfbc86aee93c080470389b00a57d498",
         "type": "github"
       },
       "original": {
         "owner": "nixos",
-        "ref": "master",
+        "ref": "nixpkgs-22.05-darwin",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -178,7 +178,7 @@
         "home-manager": "home-manager",
         "ironhide": "ironhide",
         "nixpkgs": "nixpkgs_3",
-        "nixpkgs-stable": "nixpkgs-stable",
+        "nixpkgs-master": "nixpkgs-master",
         "nixpkgs-unstable": "nixpkgs-unstable"
       }
     },
@@ -198,21 +198,6 @@
       "original": {
         "owner": "oxalica",
         "repo": "rust-overlay",
-        "type": "github"
-      }
-    },
-    "utils": {
-      "locked": {
-        "lastModified": 1667077288,
-        "narHash": "sha256-bdC8sFNDpT0HK74u9fUkpbf1MEzVYJ+ka7NXCdgBoaA=",
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "rev": "6ee9ebb6b1ee695d2cacc4faa053a7b9baa76817",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "repo": "flake-utils",
         "type": "github"
       }
     }

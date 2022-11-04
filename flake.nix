@@ -7,17 +7,17 @@
   };
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/master";
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixpkgs-22.05-darwin";
+    nixpkgs-master.url = "github:nixos/nixpkgs/master";
+    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-22.05-darwin";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     darwin.url = "github:lnl7/nix-darwin";
     darwin.inputs.nixpkgs.follows = "nixpkgs-unstable";
-    home-manager.url = "github:nix-community/home-manager";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs-unstable";
+    home-manager.url = "github:nix-community/home-manager/release-22.05";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
     ironhide.url = "git+ssh://git@github.com/IronCoreLabs/ironhide-rs?ref=main";
   };
 
-  outputs = inputs@{ self, darwin, nixpkgs, nixpkgs-stable, nixpkgs-unstable
+  outputs = inputs@{ self, darwin, nixpkgs-master, nixpkgs, nixpkgs-unstable
     , home-manager, ... }:
     let
       username = "colt";
@@ -36,13 +36,13 @@
       overlays = {
         # Overlays to add different versions `nixpkgs` into package set
         master = _: prev: {
-          master = import nixpkgs {
+          master = import nixpkgs-master {
             inherit (prev.stdenv) system;
             inherit (nixpkgsConfig) config;
           };
         };
         stable = _: prev: {
-          stable = import nixpkgs-stable {
+          stable = import nixpkgs {
             inherit (prev.stdenv) system;
             inherit (nixpkgsConfig) config;
           };
@@ -77,7 +77,7 @@
             overlays = with overlays; [ master stable unstable apple-silicon ];
           };
           specialArgs = {
-            inherit inputs darwin username nixpkgs-stable nixpkgs-unstable;
+            inherit inputs darwin username nixpkgs-unstable nixpkgs;
           };
           modules = [
             ./modules/darwin
@@ -85,10 +85,7 @@
             home-manager.darwinModules.home-manager
             {
               home-manager = {
-                extraSpecialArgs = {
-                  inherit inputs darwin username nixpkgs-stable
-                    nixpkgs-unstable;
-                };
+                extraSpecialArgs = { inherit inputs darwin username; };
                 useGlobalPkgs = true;
                 useUserPackages = true;
                 backupFileExtension = "bak";
@@ -98,7 +95,7 @@
                     {
                       home.sessionVariables = {
                         NIX_PATH =
-                          "nixpkgs=${nixpkgs-unstable}:stable=${nixpkgs-stable}\${NIX_PATH:+:}$NIX_PATH";
+                          "nixpkgs=${nixpkgs-unstable}:stable=${nixpkgs}\${NIX_PATH:+:}$NIX_PATH";
                       };
                     }
                   ];
