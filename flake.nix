@@ -74,7 +74,13 @@
           pkgs = import nixpkgs {
             system = "aarch64-darwin";
             inherit (nixpkgsConfig) config;
-            overlays = with overlays; [ master stable unstable apple-silicon ];
+            overlays = with overlays; [ master stable unstable apple-silicon
+            (_: prev: {
+            ironhide =
+                inputs.ironhide.packages.${prev.stdenv.system}.ironhide-rs;
+              }
+            )
+             ];
           };
           specialArgs = {
             inherit inputs darwin username nixpkgs-unstable nixpkgs;

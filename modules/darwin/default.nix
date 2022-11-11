@@ -45,6 +45,6 @@
     ./core.nix
     ./brew.nix
     ./preferences.nix
-    ./postgres.nix
+    # ./postgres.nix
   ];
 }

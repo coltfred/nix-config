@@ -34,7 +34,9 @@ let
     btop
     openjdk17
     pkgs.unstable.ironhide
-    (pkgs.unstable.google-cloud-sdk.withExtraComponents [pkgs.unstable.google-cloud-sdk.components.cloud-build-local])
+    (pkgs.unstable.google-cloud-sdk.withExtraComponents [pkgs.unstable.google-cloud-sdk.components.gke-gcloud-auth-plugin])
+    yaml2json
+    vault
   ];
 
   # below is to make compiling tools/projects without dedicated nix environments more likely to succeed
