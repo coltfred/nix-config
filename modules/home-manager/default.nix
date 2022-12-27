@@ -34,7 +34,6 @@ let
     btop
     openjdk17
     pkgs.unstable.ironhide
-    (pkgs.unstable.google-cloud-sdk.withExtraComponents [pkgs.unstable.google-cloud-sdk.components.gke-gcloud-auth-plugin])
     yaml2json
     vault
   ];

@@ -16,6 +16,7 @@
       "homebrew/core"
       "homebrew/services"
       "homebrew/cask-drivers" # for flipper zero
+      "fujiapple852/trippy"
     ];
 
     casks = [
@@ -30,6 +31,8 @@
       "signal"
       "spotify"
       "zoom"
+      "google-chrome"
+      "steam"
     ];
 
     masApps = {
@@ -37,6 +40,6 @@
       "Slack" = 803453959;
       "Xcode" = 497799835;
     };
-    brews = [ "pam-reattach" "chkrootkit" ];
+    brews = [ "pam-reattach" "chkrootkit" "trippy"];
   };
 }
