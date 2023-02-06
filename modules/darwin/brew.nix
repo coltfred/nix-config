@@ -2,8 +2,8 @@
   homebrew = {
     enable = true;
     onActivation = {
-      autoUpdate = true;
-      upgrade = true;
+      autoUpdate = false;
+      upgrade = false;
       cleanup =
         "uninstall"; # should maybe be "zap" - remove anything not listed here
     };
@@ -33,6 +33,7 @@
       "zoom"
       "google-chrome"
       "steam"
+      "gpg-suite"
     ];
 
     masApps = {

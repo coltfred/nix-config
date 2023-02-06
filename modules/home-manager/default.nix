@@ -197,6 +197,13 @@ in {
       # vunguyentuan.vscode-css-variables
       # ZixuanChen.vitest-explorer
       # bettercomments ?
+    ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+      {
+        name = "kubernetes-yaml-formatter";
+        publisher = "kennylong";
+        version = "1.1.0";
+        sha256 = "9M5+S7ApyxcFefMT075aeNLyGQQwLvr/YjpISbsM+Vk=";
+      }
     ];
     userSettings = {
       # Much of the following adapted from https://github.com/LunarVim/LunarVim/blob/4625145d0278d4a039e55c433af9916d93e7846a/utils/vscode_config/settings.json
@@ -376,9 +383,9 @@ in {
       lt = "exa --icons --git-ignore --git -F --extended -T";
       llt = "exa --icons --git-ignore --git -F --extended -l -T";
       dwupdate =
-        "pushd ~/.config/nixpkgs ; nix flake update ; /opt/homebrew/bin/brew update; popd ; pushd ~; darwin-rebuild switch --flake ~/.config/nixpkgs/.#$(hostname -s) --show-trace; /opt/homebrew/bin/brew upgrade ; /opt/homebrew/bin/brew upgrade --cask; popd";
+        "pushd ~/.config/nixpkgs ; nix flake update ; /opt/homebrew/bin/brew update; popd ; pushd ~; darwin-rebuild switch --flake ~/.config/nixpkgs/.#$(hostname -s); /opt/homebrew/bin/brew upgrade ; /opt/homebrew/bin/brew upgrade --cask; popd";
       dwswitch =
-        "pushd ~; darwin-rebuild switch --flake ~/.config/nixpkgs/.#$(hostname -s) --show-trace; popd";
+        "pushd ~; darwin-rebuild switch --flake ~/.config/nixpkgs/.#$(hostname -s); popd";
     };
   };
 
