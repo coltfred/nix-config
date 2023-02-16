@@ -36,6 +36,7 @@ let
     pkgs.unstable.ironhide
     yaml2json
     vault
+    dbeaver
   ];
 
   # below is to make compiling tools/projects without dedicated nix environments more likely to succeed
