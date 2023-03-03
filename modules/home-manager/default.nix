@@ -223,6 +223,7 @@ in {
       "[nix]"."editor.tabSize" = 2;
       "[svelte]"."editor.defaultFormatter" = "svelte.svelte-vscode";
       "[jsonc]"."editor.defaultFormatter" = "esbenp.prettier-vscode";
+      "[typescript]"."editor.defaultFormatter" = "esbenp.prettier-vscode";
       "extensions.ignoreRecommendations" = false;
       "files.insertFinalNewline" = true;
       "[scala]"."editor.tabSize" = 2;
