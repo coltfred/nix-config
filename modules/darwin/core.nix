@@ -44,9 +44,12 @@ in {
         </plist
       '';
     };
+  };
 
-    # Many of these taken from https://github.com/mathiasbynens/dotfiles/blob/master/.macos
-    extraInit = ''
+  # Many of these taken from https://github.com/mathiasbynens/dotfiles/blob/master/.macos
+  system.activationScripts.extraActivation.enable = true;
+    system.activationScripts.extraActivation.text = ''
+      echo "Activating extra preferences..."
       # Close any open System Preferences panes, to prevent them from overriding
       # settings we’re about to change
       osascript -e 'tell application "System Preferences" to quit'
@@ -112,11 +115,10 @@ in {
       # Prevent Photos from opening automatically when devices are plugged in
       defaults -currentHost write com.apple.ImageCapture disableHotPlug -bool true
     '';
-  };
 
   # Just configure DNS for WiFi for now
-  networking.knownNetworkServices = [ "Wi-Fi" ];
-  networking.dns = [ "1.1.1.1" "1.0.0.1" ];
+  networking.knownNetworkServices = ["Wi-Fi"];
+  networking.dns = ["1.1.1.1" "1.0.0.1"];
 
   system.keyboard = {
     enableKeyMapping = true;
