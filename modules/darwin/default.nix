@@ -1,6 +1,6 @@
 { pkgs, config, username, nixpkgs, nixpkgs-unstable, ... }: {
   time.timeZone = "America/Denver";
-    # Fixes error about home dir being /var/empty
+  # Fixes error about home dir being /var/empty
   # See https://github.com/nix-community/home-manager/issues/4026
   users.users.${username} = {
     home =
