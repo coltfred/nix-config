@@ -17,6 +17,7 @@
       "homebrew/services"
       "homebrew/cask-drivers" # for flipper zero
       "fujiapple852/trippy"
+      "localstack/tap"
     ];
 
     casks = [
@@ -24,16 +25,17 @@
       "discord"
       "docker"
       "firefox"
+      "gpg-suite"
+      "google-chrome"
       "insomnia"
       "imageoptim"
+      "linearmouse"
+      "localstack"
       "qlmarkdown"
-      "raycast"
       "signal"
       "spotify"
-      "zoom"
-      "google-chrome"
       "steam"
-      "gpg-suite"
+      "zoom"
     ];
 
     masApps = {

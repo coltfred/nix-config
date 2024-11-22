@@ -37,8 +37,6 @@
       automatic = true;
       options = "--delete-older-than 30d";
     };
-    readOnlyStore = true;
-
   };
 
   imports = [

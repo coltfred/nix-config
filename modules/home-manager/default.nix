@@ -16,6 +16,7 @@ let
     gzip
     xz
     zip
+    rar
 
     # file viewers
     less
@@ -36,7 +37,8 @@ let
     pkgs.unstable.ironhide
     yaml2json
     vault
-    dbeaver
+    dbeaver-bin
+    raycast
   ];
 
   # below is to make compiling tools/projects without dedicated nix environments more likely to succeed
@@ -53,7 +55,7 @@ let
     openssl # also needed by many things
   ];
   # using unstable in my home profile for nix commands
-  nixEditorPkgs = with pkgs; [ nix statix nixfmt pkgs.fmt rnix-lsp ];
+  nixEditorPkgs = with pkgs; [ nix statix nixfmt-classic pkgs.fmt ];
   # live dangerously here with unstable
   rustPkgs = with pkgs; [ cargo rustfmt rust-analyzer rustc ];
   # live dangerously here with unstable
@@ -166,46 +168,54 @@ in {
     mutableExtensionsDir =
       true; # to allow vscode to install extensions not available via nix
     # package = pkgs.unstable.vscode-fhs; # or pkgs.vscodium or pkgs.vscode-with-extensions
-    extensions = with pkgs.vscode-extensions; [
-      scala-lang.scala
-      svelte.svelte-vscode
-      redhat.vscode-yaml
-      jnoortheen.nix-ide
-      vspacecode.whichkey # ?
-      bungcip.better-toml
-      esbenp.prettier-vscode
-      timonwong.shellcheck
-      matklad.rust-analyzer
-      graphql.vscode-graphql
-      dbaeumer.vscode-eslint
-      codezombiech.gitignore
-      bierner.markdown-emoji
-      bradlc.vscode-tailwindcss
-      naumovs.color-highlight
-      mikestead.dotenv
-      mskelton.one-dark-theme
-      brettm12345.nixfmt-vscode
-      davidanson.vscode-markdownlint
-      pkief.material-icon-theme
-      dracula-theme.theme-dracula
-      eamodio.gitlens # for git blame
-      marp-team.marp-vscode # for markdown slides
-      # wishlist
-      # ardenivanov.svelte-intellisense
-      # cschleiden.vscode-github-actions
-      # csstools.postcss
-      # stylelint.vscode-stylelint
-      # vunguyentuan.vscode-css-variables
-      # ZixuanChen.vitest-explorer
-      # bettercomments ?
-    ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
-      {
+    extensions = with pkgs.vscode-extensions;
+      [
+        scala-lang.scala
+        svelte.svelte-vscode
+        redhat.vscode-yaml
+        jnoortheen.nix-ide
+        tamasfe.even-better-toml
+        esbenp.prettier-vscode
+        timonwong.shellcheck
+        rust-lang.rust-analyzer
+        graphql.vscode-graphql
+        dbaeumer.vscode-eslint
+        codezombiech.gitignore
+        bierner.markdown-emoji
+        bradlc.vscode-tailwindcss
+        naumovs.color-highlight
+        mikestead.dotenv
+        mskelton.one-dark-theme
+        brettm12345.nixfmt-vscode
+        davidanson.vscode-markdownlint
+        pkief.material-icon-theme
+        dracula-theme.theme-dracula
+        eamodio.gitlens # for git blame
+        humao.rest-client
+        mkhl.direnv
+        redhat.java
+        ms-python.python
+      ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [{
         name = "kubernetes-yaml-formatter";
         publisher = "kennylong";
         version = "1.1.0";
         sha256 = "9M5+S7ApyxcFefMT075aeNLyGQQwLvr/YjpISbsM+Vk=";
-      }
-    ];
+      }]
+      # These are for python dev
+      ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+        {
+          name = "black-formatter";
+          publisher = "ms-python";
+          version = "2023.5.12151008";
+          sha256 = "YBcyyE9Z2eL914J8I97WQW8a8A4Ue6C0pCUjWRRPcr8=";
+        }
+        {
+          name = "mypy-type-checker";
+          publisher = "ms-python";
+          version = "2023.2.0";
+          sha256 = "KIaXl7SBODzoJQM9Z1ZuIS5DgEKtv/CHDWJ8n8BAmtU=";
+        }
+      ];
     userSettings = {
       # Much of the following adapted from https://github.com/LunarVim/LunarVim/blob/4625145d0278d4a039e55c433af9916d93e7846a/utils/vscode_config/settings.json
       "editor.tabSize" = 2;
@@ -380,10 +390,10 @@ in {
     sessionVariables = { };
     shellAliases = {
       ls = "ls --color=auto -F";
-      l = "exa --icons --git-ignore --git -F --extended";
-      ll = "exa --icons --git-ignore --git -F --extended -l";
-      lt = "exa --icons --git-ignore --git -F --extended -T";
-      llt = "exa --icons --git-ignore --git -F --extended -l -T";
+      l = "eza --icons --git-ignore --git -F --extended";
+      ll = "eza --icons --git-ignore --git -F --extended -l";
+      lt = "eza --icons --git-ignore --git -F --extended -T";
+      llt = "eza --icons --git-ignore --git -F --extended -l -T";
       dwupdate =
         "pushd ~/.config/nixpkgs ; nix flake update ; /opt/homebrew/bin/brew update; popd ; pushd ~; darwin-rebuild switch --flake ~/.config/nixpkgs/.#$(hostname -s); /opt/homebrew/bin/brew upgrade ; /opt/homebrew/bin/brew upgrade --cask; popd";
       dwswitch =
@@ -391,15 +401,17 @@ in {
     };
   };
 
-  programs.exa.enable = true;
+  programs.eza.enable = true;
 
   programs.git = {
     enable = true;
     userName = "Colt Frederickson";
     userEmail = "coltfred@gmail.com";
     aliases = {
-      cb = "!f() { git checkout -b $1 && git push --set-upstream origin $1; }; f";
-      pp = "!echo 'Pulling' && git pull && echo '' && echo 'Pushing' && git push";
+      cb =
+        "!f() { git checkout -b $1 && git push --set-upstream origin $1; }; f";
+      pp =
+        "!echo 'Pulling' && git pull && echo '' && echo 'Pushing' && git push";
       gone = ''
         ! git fetch -p && git for-each-ref --format '%(refname:short) %(upstream:track)' | awk '$2 == "[gone]" {print $1}' | xargs -r git branch -D'';
       tatus = "status";
@@ -461,7 +473,8 @@ in {
   };
 
   programs.alacritty = {
-    package = pkgs.stable.alacritty; # added 2022-11-02 because of mesa build break TODO: remove
+    package =
+      pkgs.stable.alacritty; # added 2022-11-02 because of mesa build break TODO: remove
     enable = true;
     settings = {
       window.decorations = "full";

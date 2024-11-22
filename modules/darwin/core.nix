@@ -125,15 +125,38 @@ in {
     remapCapsLockToEscape = true;
   };
 
-  fonts.fontDir.enable =
-    true; # if this is true, manually installed system fonts will be deleted!
-  fonts.fonts = with pkgs.stable; [
-    powerline-fonts
-    source-code-pro
-    nerdfonts
+  launchd.user.agents.raycast = {
+    serviceConfig.ProgramArguments = ["${pkgs.raycast}/Applications/Raycast.app/Contents/MacOS/Raycast"];
+    serviceConfig.RunAtLoad = true;
+  };
+
+fonts.packages = with pkgs; [
+    # powerline-fonts
+    # source-code-pro
+    roboto-slab
+    source-sans-pro
+    (nerdfonts.override {
+      # holy hell it can take a long time to install everything; strip down
+      fonts = [
+        "FiraCode"
+        "Hasklig"
+        "DroidSansMono"
+        "DejaVuSansMono"
+        "iA-Writer"
+        "JetBrainsMono"
+        "Meslo"
+        "SourceCodePro"
+        "Inconsolata"
+        "NerdFontsSymbolsOnly" # for some apps, you can use this with any unpatched font
+      ];
+    })
+    montserrat
+    raleway
     vegur
     noto-fonts
+    vistafonts # needed for msoffice
   ];
+
   nix.nixPath = [ "darwin=/etc/${config.environment.etc.darwin.target}" ];
   nix.extraOptions = ''
     extra-platforms = x86_64-darwin aarch64-darwin
