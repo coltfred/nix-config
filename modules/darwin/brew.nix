@@ -17,7 +17,6 @@
       "homebrew/services"
       "homebrew/cask-drivers" # for flipper zero
       "fujiapple852/trippy"
-      "localstack/tap"
     ];
 
     casks = [
@@ -30,7 +29,6 @@
       "insomnia"
       "imageoptim"
       "linearmouse"
-      "localstack"
       "qlmarkdown"
       "signal"
       "spotify"

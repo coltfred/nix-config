@@ -4,7 +4,6 @@ in {
 
   # environment setup
   environment = {
-    loginShell = pkgs.stable.zsh;
     pathsToLink = [ "/Applications" ];
     # I exclusively control homebrew from here, but it's annoying to fully qualify the path to brew binaries
     systemPath = [ "/opt/homebrew/bin" ];

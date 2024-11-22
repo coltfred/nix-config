@@ -1,7 +1,5 @@
-{ inputs, config, pkgs, ... }:
+{ inputs, config, pkgs, lib, ... }:
 let
-  homeDir = config.home.homeDirectory;
-
   defaultPkgs = with pkgs.stable; [
     # filesystem
     fd
@@ -316,6 +314,25 @@ in {
     };
   };
 
+  # VSCode whines like a ... I don't know, but a lot when the config file is read-only
+  # I want nix to govern the configs, but to let vscode edit it (ephemerally) if I change
+  # the zoom or whatever. This hack just copies the symlink to a normal file
+  home.activation.vscodeWritableConfig = lib.hm.dag.entryAfter ["writeBoundary"] ''
+    code_dir="$(echo ~/Library)/Application Support/Code/User"
+    settings="$code_dir/settings.json"
+    settings_nix="$code_dir/settings.nix.json"
+    settings_bak="$settings.bak"
+
+    if [ -f "$settings" ] ; then
+      echo "activating $settings"
+
+      $DRY_RUN_CMD mv "$settings" "$settings_nix"
+      $DRY_RUN_CMD cp -H "$settings_nix" "$settings"
+      $DRY_RUN_CMD chmod u+w "$settings"
+      $DRY_RUN_CMD rm "$settings_bak"
+    fi
+  '';
+
   programs.fzf = {
     enable = true;
     enableZshIntegration = true;
@@ -336,8 +353,7 @@ in {
   programs.zsh = {
     enable = true;
     enableCompletion = true;
-    enableAutosuggestions = true;
-    enableSyntaxHighlighting = true;
+    syntaxHighlighting.enable = true;
     # let's the terminal track current working dir but only builds on linux
     enableVteIntegration =
       if pkgs.stable.stdenvNoCC.isDarwin then false else true;
@@ -401,7 +417,10 @@ in {
     };
   };
 
-  programs.eza.enable = true;
+  programs.eza = {
+    enable = true;
+    package = pkgs.unstable.eza;
+  };
 
   programs.git = {
     enable = true;

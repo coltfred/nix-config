@@ -12,7 +12,7 @@
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     darwin.url = "github:lnl7/nix-darwin";
     darwin.inputs.nixpkgs.follows = "nixpkgs-unstable";
-    home-manager.url = "github:nix-community/home-manager/release-22.11";
+    home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     ironhide.url = "git+ssh://git@github.com/IronCoreLabs/ironhide-rs?ref=main";
   };
@@ -95,7 +95,7 @@
                 useGlobalPkgs = true;
                 useUserPackages = true;
                 backupFileExtension = "bak";
-                users.colt = {
+                users."${username}" = {
                   imports = [
                     ./modules/home-manager
                     {
