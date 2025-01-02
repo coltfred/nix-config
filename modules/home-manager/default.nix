@@ -37,6 +37,7 @@ let
     vault
     dbeaver-bin
     raycast
+    obsidian
   ];
 
   # below is to make compiling tools/projects without dedicated nix environments more likely to succeed
@@ -67,7 +68,6 @@ let
       prettier
       vscode-langservers-extracted # lsp servers for json, html, css
       tailwindcss
-      pnpm
       svelte-language-server
     ] ++ [
       # weird hack to allow for funky package name
@@ -169,8 +169,6 @@ in {
     extensions = with pkgs.vscode-extensions;
       [
         scala-lang.scala
-        svelte.svelte-vscode
-        redhat.vscode-yaml
         jnoortheen.nix-ide
         tamasfe.even-better-toml
         esbenp.prettier-vscode
