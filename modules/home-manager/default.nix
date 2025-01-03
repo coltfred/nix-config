@@ -563,5 +563,6 @@ in {
     ];
   };
 
+  services.syncthing.enable = true;
   programs.go.enable = true;
 }
