@@ -21,6 +21,7 @@
 
     casks = [
       "amethyst" # for window tiling -- I miss chunkwm but it's successor, yabai, was unstable.
+      "blackhole-2ch" # for recording output from speakers
       "discord"
       "docker"
       "firefox"
