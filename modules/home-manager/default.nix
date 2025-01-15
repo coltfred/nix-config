@@ -499,38 +499,32 @@ in {
       #background_opacity = 0.9;
       window.opacity = 0.9;
       scrolling.history = 3000;
-      scrolling.smooth = true;
       font.normal.family = "MesloLGS Nerd Font Mono";
       font.normal.style = "Regular";
       font.bold.style = "Bold";
       font.italic.style = "Italic";
       font.bold_italic.style = "Bold Italic";
       font.size = if pkgs.stdenvNoCC.isDarwin then 16 else 9;
-      shell.program = "${pkgs.zsh}/bin/zsh";
-      live_config_reload = true;
+      terminal.shell.program = "${pkgs.zsh}/bin/zsh";
+      general.live_config_reload = true;
       cursor.vi_mode_style = "Underline";
-      draw_bold_text_with_bright_colors = true;
-      key_bindings = [
-        {
-          key = "Escape";
-          mods = "Control";
-          mode = "~Search";
-          action = "ToggleViMode";
-        }
-        # cmd-{ and cmd-} and cmd-] and cmd-[ will switch tmux windows
-        {
-          key = "LBracket";
-          mods = "Command";
-          # \x02 is ctrl-b so sequence below is ctrl-b, h
-          chars = "\\x02h";
-        }
-        {
-          key = "RBracket";
-          mods = "Command";
-          chars = "\\x02l";
-        }
-      ];
     };
+  };
+
+  programs.wezterm = {
+    enable = true;
+    extraConfig = ''
+      return {
+        adjust_window_size_when_changing_font_size = false,
+        color_scheme = "Hardcore",
+        font = wezterm.font("JetBrains Mono"),
+        font_size = 16.0,
+        front_end = "WebGpu",
+        hide_tab_bar_if_only_one_tab = true,
+        scrollback_lines = 15000,
+        window_background_opacity = 0.7
+      }
+    '';
   };
 
   programs.tmux = {
