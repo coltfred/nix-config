@@ -1,5 +1,10 @@
-{ inputs, config, pkgs, lib, ... }:
-let
+{
+  inputs,
+  config,
+  pkgs,
+  lib,
+  ...
+}: let
   defaultPkgs = with pkgs.stable; [
     # filesystem
     fd
@@ -32,7 +37,7 @@ let
     pstree
     btop
     openjdk17
-    pkgs.unstable.ironhide
+    pkgs.ironhide
     yaml2json
     vault
     dbeaver-bin
@@ -54,9 +59,9 @@ let
     openssl # also needed by many things
   ];
   # using unstable in my home profile for nix commands
-  nixEditorPkgs = with pkgs; [ nix statix nixfmt-classic pkgs.fmt ];
+  nixEditorPkgs = with pkgs; [nix statix nixfmt-classic pkgs.fmt];
   # live dangerously here with unstable
-  rustPkgs = with pkgs; [ cargo rustfmt rust-analyzer rustc ];
+  rustPkgs = with pkgs; [cargo rustfmt rust-analyzer rustc];
   # live dangerously here with unstable
   typescriptPkgs = with pkgs.stable.nodePackages;
     [
@@ -69,13 +74,13 @@ let
       vscode-langservers-extracted # lsp servers for json, html, css
       tailwindcss
       svelte-language-server
-    ] ++ [
+    ]
+    ++ [
       # weird hack to allow for funky package name
       pkgs.stable.nodePackages."@tailwindcss/language-server"
     ];
 
-  networkPkgs = with pkgs.stable; [ mtr iftop ];
-
+  networkPkgs = with pkgs.stable; [mtr iftop];
 in {
   programs.home-manager.enable = true;
   home.enableNixpkgsReleaseCheck = false;
@@ -89,8 +94,13 @@ in {
   # the Home Manager release notes for a list of state version
   # changes in each release.
   home.stateVersion = "20.09";
-  home.packages = defaultPkgs ++ cPkgs ++ nixEditorPkgs ++ rustPkgs
-    ++ typescriptPkgs ++ networkPkgs;
+  home.packages =
+    defaultPkgs
+    ++ cPkgs
+    ++ nixEditorPkgs
+    ++ rustPkgs
+    ++ typescriptPkgs
+    ++ networkPkgs;
 
   home.sessionVariables = {
     LANG = "en_US.UTF-8";
@@ -100,13 +110,11 @@ in {
     #EDITOR = "nvim";
     #VISUAL = "nvim";
     #GIT_EDITOR = "nvim";
-    LS_COLORS =
-      "no=00:fi=00:di=01;34:ln=35;40:pi=40;33:so=01;35:bd=40;33;01:cd=40;33;01:or=01;05;37;41:mi=01;05;37;41:ex=01;32:*.cmd=01;32:*.exe=01;32:*.com=01;32:*.btm=01;32:*.bat=01;32:";
+    LS_COLORS = "no=00:fi=00:di=01;34:ln=35;40:pi=40;33:so=01;35:bd=40;33;01:cd=40;33;01:or=01;05;37;41:mi=01;05;37;41:ex=01;32:*.cmd=01;32:*.exe=01;32:*.com=01;32:*.btm=01;32:*.bat=01;32:";
     LSCOLORS = "ExfxcxdxCxegedabagacad";
     FIGNORE = "*.o:~:Application Scripts:CVS:.git";
     TZ = "America/Denver";
-    LESS =
-      "--raw-control-chars -FXRadeqs -P--Less--?e?x(Next file: %x):(END).:?pB%pB%.";
+    LESS = "--raw-control-chars -FXRadeqs -P--Less--?e?x(Next file: %x):(END).:?pB%pB%.";
     CLICOLOR = 1;
     CLICOLOR_FORCE = "yes";
     PAGER = "less";
@@ -150,8 +158,7 @@ in {
     config = {
       theme = "TwoDark";
       italic-text = "always";
-      style =
-        "plain"; # no line numbers, git status, etc... more like cat with colors
+      style = "plain"; # no line numbers, git status, etc... more like cat with colors
     };
   };
   programs.nix-index.enable = true;
@@ -191,12 +198,15 @@ in {
         mkhl.direnv
         redhat.java
         ms-python.python
-      ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [{
-        name = "kubernetes-yaml-formatter";
-        publisher = "kennylong";
-        version = "1.1.0";
-        sha256 = "9M5+S7ApyxcFefMT075aeNLyGQQwLvr/YjpISbsM+Vk=";
-      }]
+      ]
+      ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+        {
+          name = "kubernetes-yaml-formatter";
+          publisher = "kennylong";
+          version = "1.1.0";
+          sha256 = "sha256-bAdMQxefeqedBdLiYqFBbuSN0auKAs4SKnrqK9/m65c=";
+        }
+      ]
       # These are for python dev
       ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
         {
@@ -218,8 +228,7 @@ in {
       "editor.fontLigatures" = true;
       "editor.guides.indentation" = false;
       "editor.insertSpaces" = true;
-      "editor.fontFamily" =
-        "'Hasklug Nerd Font', 'JetBrainsMono Nerd Font', 'FiraCode Nerd Font','SF Mono', Menlo, Monaco, 'Courier New', monospace";
+      "editor.fontFamily" = "'Hasklug Nerd Font', 'JetBrainsMono Nerd Font', 'FiraCode Nerd Font','SF Mono', Menlo, Monaco, 'Courier New', monospace";
       "editor.fontSize" = 12;
       "editor.formatOnSave" = true;
       "editor.suggestSelection" = "first";
@@ -239,8 +248,7 @@ in {
       "gitlens.codeLens.enabled" = false;
       "gitlens.currentLine.enabled" = false;
       "gitlens.hovers.currentLine.over" = "line";
-      "vsintellicode.modify.editor.suggestSelection" =
-        "automaticallyOverrodeDefaultValue";
+      "vsintellicode.modify.editor.suggestSelection" = "automaticallyOverrodeDefaultValue";
       "java.semanticHighlighting.enabled" = true;
       "workbench.editor.showTabs" = true;
       "workbench.list.automaticKeyboardNavigation" = false;
@@ -270,7 +278,7 @@ in {
               "entity.name.type.namespace"
               "keyword.other.important"
             ];
-            "settings" = { "fontStyle" = "bold"; };
+            "settings" = {"fontStyle" = "bold";};
           }
           {
             "name" = "One Dark italic";
@@ -285,7 +293,7 @@ in {
               "variable.language.super"
               "variable.language.this"
             ];
-            "settings" = { "fontStyle" = "italic"; };
+            "settings" = {"fontStyle" = "italic";};
           }
           {
             "name" = "One Dark italic reset";
@@ -300,12 +308,12 @@ in {
               "storage.type.java"
               "storage.type.primitive"
             ];
-            "settings" = { "fontStyle" = ""; };
+            "settings" = {"fontStyle" = "";};
           }
           {
             "name" = "One Dark bold italic";
-            "scope" = [ "keyword.other.important" ];
-            "settings" = { "fontStyle" = "bold italic"; };
+            "scope" = ["keyword.other.important"];
+            "settings" = {"fontStyle" = "bold italic";};
           }
         ];
       };
@@ -342,7 +350,7 @@ in {
     enable = true;
     compression = true;
     controlMaster = "auto";
-    includes = [ "*.conf" ];
+    includes = ["*.conf"];
     extraConfig = ''
       AddKeysToAgent yes
     '';
@@ -354,7 +362,9 @@ in {
     syntaxHighlighting.enable = true;
     # let's the terminal track current working dir but only builds on linux
     enableVteIntegration =
-      if pkgs.stable.stdenvNoCC.isDarwin then false else true;
+      if pkgs.stable.stdenvNoCC.isDarwin
+      then false
+      else true;
 
     history = {
       expireDuplicatesFirst = true;
@@ -401,23 +411,21 @@ in {
       zmodload -a autocomplete
       zmodload -a complist
     '';
-    sessionVariables = { };
+    sessionVariables = {};
     shellAliases = {
       ls = "ls --color=auto -F";
       l = "eza --icons --git-ignore --git -F --extended";
       ll = "eza --icons --git-ignore --git -F --extended -l";
       lt = "eza --icons --git-ignore --git -F --extended -T";
       llt = "eza --icons --git-ignore --git -F --extended -l -T";
-      dwupdate =
-        "pushd ~/.config/nixpkgs ; nix flake update ; /opt/homebrew/bin/brew update; popd ; pushd ~; darwin-rebuild switch --flake ~/.config/nixpkgs/.#$(hostname -s); /opt/homebrew/bin/brew upgrade ; /opt/homebrew/bin/brew upgrade --cask; popd";
-      dwswitch =
-        "pushd ~; darwin-rebuild switch --flake ~/.config/nixpkgs/.#$(hostname -s); popd";
+      dwupdate = "pushd ~/.config/nixpkgs ; nix flake update ; /opt/homebrew/bin/brew update; popd ; pushd ~; darwin-rebuild switch --flake ~/.config/nixpkgs/.#$(hostname -s); /opt/homebrew/bin/brew upgrade ; /opt/homebrew/bin/brew upgrade --cask; popd";
+      dwswitch = "pushd ~; darwin-rebuild switch --flake ~/.config/nixpkgs/.#$(hostname -s); popd";
     };
   };
 
   programs.eza = {
     enable = true;
-    package = pkgs.unstable.eza;
+    package = pkgs.eza;
   };
 
   programs.git = {
@@ -425,10 +433,8 @@ in {
     userName = "Colt Frederickson";
     userEmail = "coltfred@gmail.com";
     aliases = {
-      cb =
-        "!f() { git checkout -b $1 && git push --set-upstream origin $1; }; f";
-      pp =
-        "!echo 'Pulling' && git pull && echo '' && echo 'Pushing' && git push";
+      cb = "!f() { git checkout -b $1 && git push --set-upstream origin $1; }; f";
+      pp = "!echo 'Pulling' && git pull && echo '' && echo 'Pushing' && git push";
       gone = ''
         ! git fetch -p && git for-each-ref --format '%(refname:short) %(upstream:track)' | awk '$2 == "[gone]" {print $1}' | xargs -r git branch -D'';
       tatus = "status";
@@ -436,10 +442,8 @@ in {
       br = "branch";
       st = "status -sb";
       wtf = "!git-wtf";
-      lg =
-        "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --topo-order --date=relative";
-      gl =
-        "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --topo-order --date=relative";
+      lg = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --topo-order --date=relative";
+      gl = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --topo-order --date=relative";
       lp = "log -p";
       lr = "reflog";
       ls = "ls-files";
@@ -467,10 +471,10 @@ in {
       init.defaultBranch = "main";
       http.sslVerify = true;
       commit.verbose = true;
-      credential.helper = if pkgs.unstable.stdenvNoCC.isDarwin then
-        "osxkeychain"
-      else
-        "cache --timeout=10000000";
+      credential.helper =
+        if pkgs.stdenvNoCC.isDarwin
+        then "osxkeychain"
+        else "cache --timeout=10000000";
       diff.algorithm = "patience";
       protocol.version = "2";
       core.commitGraph = true;
@@ -504,7 +508,10 @@ in {
       font.bold.style = "Bold";
       font.italic.style = "Italic";
       font.bold_italic.style = "Bold Italic";
-      font.size = if pkgs.stdenvNoCC.isDarwin then 16 else 9;
+      font.size =
+        if pkgs.stdenvNoCC.isDarwin
+        then 16
+        else 9;
       terminal.shell.program = "${pkgs.zsh}/bin/zsh";
       general.live_config_reload = true;
       cursor.vi_mode_style = "Underline";

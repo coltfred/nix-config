@@ -1,4 +1,10 @@
-{ pkgs, config, username, nixpkgs, nixpkgs-unstable, ... }: {
+{
+  pkgs,
+  config,
+  username,
+  nixpkgs,
+  ...
+}: {
   time.timeZone = "America/Denver";
   # Fixes error about home dir being /var/empty
   # See https://github.com/nix-community/home-manager/issues/4026
@@ -17,12 +23,11 @@
   # environment setup
   environment = {
     etc = {
-      nixpkgs.source = "${nixpkgs-unstable}";
-      stable.source = "${nixpkgs}";
+      nixpkgs.source = "${nixpkgs}";
     };
     # list of acceptable shells in /etc/shells
-    shells = with pkgs; [ bash zsh ];
-    pathsToLink = [ "/libexec" ];
+    shells = with pkgs; [bash zsh];
+    pathsToLink = ["/libexec"];
   };
 
   nix = {
@@ -32,12 +37,12 @@
       experimental-features = nix-command flakes
     '';
     settings = {
-     # Because macos sandbox can create issues https://github.com/NixOS/nix/issues/4119
-      sandbox = (!pkgs.stdenv.isDarwin);
-      trusted-users = [ "${username}" "root" "@admin" "@wheel" ];
+      # Because macos sandbox can create issues https://github.com/NixOS/nix/issues/4119
+      sandbox = !pkgs.stdenv.isDarwin;
+      trusted-users = ["${username}" "root" "@admin" "@wheel"];
       max-jobs = 8;
       cores = 0; # use them all
-      allowed-users = [ "@wheel" ];
+      allowed-users = ["@wheel"];
     };
     #autoOptimiseStore = true;
     #optimise.automatic = true;

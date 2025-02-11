@@ -25,6 +25,7 @@
       "discord"
       "docker"
       "firefox"
+      "focusrite-control"
       "gpg-suite"
       "google-chrome"
       "insomnia"
