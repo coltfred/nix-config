@@ -155,16 +155,11 @@ in {
     vistafonts # needed for msoffice
   ];
 
+  nix.package = pkgs.nixVersions.nix_2_26;
   nix.nixPath = ["darwin=/etc/${config.environment.etc.darwin.target}"];
   nix.extraOptions = ''
     extra-platforms = x86_64-darwin aarch64-darwin
   '';
-
-  # auto manage nixbld users with nix darwin
-  nix.configureBuildUsers = true;
-
-  # Auto upgrade nix package and the daemon service.
-  services.nix-daemon.enable = true;
 
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog

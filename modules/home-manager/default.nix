@@ -59,7 +59,7 @@
     openssl # also needed by many things
   ];
   # using unstable in my home profile for nix commands
-  nixEditorPkgs = with pkgs; [nix statix nixfmt-classic pkgs.fmt];
+  nixEditorPkgs = with pkgs; [statix nixfmt-classic pkgs.fmt];
   # live dangerously here with unstable
   rustPkgs = with pkgs; [cargo rustfmt rust-analyzer rustc];
   # live dangerously here with unstable
