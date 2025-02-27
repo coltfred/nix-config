@@ -41,6 +41,7 @@
     yaml2json
     vault
     dbeaver-bin
+    slackdump
     raycast
     obsidian
   ];
@@ -173,149 +174,152 @@ in {
     mutableExtensionsDir =
       true; # to allow vscode to install extensions not available via nix
     # package = pkgs.unstable.vscode-fhs; # or pkgs.vscodium or pkgs.vscode-with-extensions
-    extensions = with pkgs.vscode-extensions;
-      [
-        scala-lang.scala
-        jnoortheen.nix-ide
-        tamasfe.even-better-toml
-        esbenp.prettier-vscode
-        timonwong.shellcheck
-        rust-lang.rust-analyzer
-        graphql.vscode-graphql
-        dbaeumer.vscode-eslint
-        codezombiech.gitignore
-        bierner.markdown-emoji
-        bradlc.vscode-tailwindcss
-        naumovs.color-highlight
-        mikestead.dotenv
-        mskelton.one-dark-theme
-        brettm12345.nixfmt-vscode
-        davidanson.vscode-markdownlint
-        pkief.material-icon-theme
-        dracula-theme.theme-dracula
-        eamodio.gitlens # for git blame
-        humao.rest-client
-        mkhl.direnv
-        redhat.java
-        ms-python.python
-      ]
-      ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
-        {
-          name = "kubernetes-yaml-formatter";
-          publisher = "kennylong";
-          version = "1.1.0";
-          sha256 = "sha256-bAdMQxefeqedBdLiYqFBbuSN0auKAs4SKnrqK9/m65c=";
-        }
-      ]
-      # These are for python dev
-      ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
-        {
-          name = "black-formatter";
-          publisher = "ms-python";
-          version = "2023.5.12151008";
-          sha256 = "YBcyyE9Z2eL914J8I97WQW8a8A4Ue6C0pCUjWRRPcr8=";
-        }
-        {
-          name = "mypy-type-checker";
-          publisher = "ms-python";
-          version = "2023.2.0";
-          sha256 = "KIaXl7SBODzoJQM9Z1ZuIS5DgEKtv/CHDWJ8n8BAmtU=";
-        }
-      ];
-    userSettings = {
-      # Much of the following adapted from https://github.com/LunarVim/LunarVim/blob/4625145d0278d4a039e55c433af9916d93e7846a/utils/vscode_config/settings.json
-      "editor.tabSize" = 2;
-      "editor.fontLigatures" = true;
-      "editor.guides.indentation" = false;
-      "editor.insertSpaces" = true;
-      "editor.fontFamily" = "'Hasklug Nerd Font', 'JetBrainsMono Nerd Font', 'FiraCode Nerd Font','SF Mono', Menlo, Monaco, 'Courier New', monospace";
-      "editor.fontSize" = 12;
-      "editor.formatOnSave" = true;
-      "editor.suggestSelection" = "first";
-      "editor.scrollBeyondLastLine" = false;
-      "editor.cursorBlinking" = "solid";
-      "editor.minimap.enabled" = false;
-      "[nix]"."editor.tabSize" = 2;
-      "[svelte]"."editor.defaultFormatter" = "svelte.svelte-vscode";
-      "[jsonc]"."editor.defaultFormatter" = "esbenp.prettier-vscode";
-      "[typescript]"."editor.defaultFormatter" = "esbenp.prettier-vscode";
-      "extensions.ignoreRecommendations" = false;
-      "files.insertFinalNewline" = true;
-      "[scala]"."editor.tabSize" = 2;
-      "[json]"."editor.tabSize" = 2;
-      "vim.highlightedyank.enable" = true;
-      "files.trimTrailingWhitespace" = true;
-      "gitlens.codeLens.enabled" = false;
-      "gitlens.currentLine.enabled" = false;
-      "gitlens.hovers.currentLine.over" = "line";
-      "vsintellicode.modify.editor.suggestSelection" = "automaticallyOverrodeDefaultValue";
-      "java.semanticHighlighting.enabled" = true;
-      "workbench.editor.showTabs" = true;
-      "workbench.list.automaticKeyboardNavigation" = false;
-      "workbench.activityBar.visible" = false;
-      #"workbench.colorTheme" = "Dracula";
-      "workbench.colorTheme" = "One Dark";
-      "workbench.iconTheme" = "material-icon-theme";
-      "editor.accessibilitySupport" = "off";
-      "oneDark.bold" = true;
-      "window.zoomLevel" = 1;
-      "window.menuBarVisibility" = "toggle";
-      #"terminal.integrated.shell.linux" = "${pkgs.zsh}/bin/zsh";
-
-      "svelte.enable-ts-plugin" = true;
-      "javascript.inlayHints.functionLikeReturnTypes.enabled" = true;
-      "javascript.referencesCodeLens.enabled" = true;
-      "javascript.suggest.completeFunctionCalls" = true;
-
-      "editor.tokenColorCustomizations" = {
-        "textMateRules" = [
+    profiles.default = {
+      extensions = with pkgs.vscode-extensions;
+        [
+          scala-lang.scala
+          jnoortheen.nix-ide
+          tamasfe.even-better-toml
+          esbenp.prettier-vscode
+          timonwong.shellcheck
+          rust-lang.rust-analyzer
+          graphql.vscode-graphql
+          dbaeumer.vscode-eslint
+          codezombiech.gitignore
+          bierner.markdown-emoji
+          bradlc.vscode-tailwindcss
+          naumovs.color-highlight
+          mikestead.dotenv
+          mskelton.one-dark-theme
+          brettm12345.nixfmt-vscode
+          davidanson.vscode-markdownlint
+          pkief.material-icon-theme
+          dracula-theme.theme-dracula
+          eamodio.gitlens # for git blame
+          humao.rest-client
+          mkhl.direnv
+          redhat.java
+          ms-python.python
+        ]
+        ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
           {
-            "name" = "One Dark bold";
-            "scope" = [
-              "entity.name.function"
-              "entity.name.type.class"
-              "entity.name.type.module"
-              "entity.name.type.namespace"
-              "keyword.other.important"
-            ];
-            "settings" = {"fontStyle" = "bold";};
+            name = "kubernetes-yaml-formatter";
+            publisher = "kennylong";
+            version = "1.1.0";
+            sha256 = "sha256-bAdMQxefeqedBdLiYqFBbuSN0auKAs4SKnrqK9/m65c=";
+          }
+        ]
+        # These are for python dev
+        ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+          {
+            name = "black-formatter";
+            publisher = "ms-python";
+            version = "2023.5.12151008";
+            sha256 = "YBcyyE9Z2eL914J8I97WQW8a8A4Ue6C0pCUjWRRPcr8=";
           }
           {
-            "name" = "One Dark italic";
-            "scope" = [
-              "comment"
-              "entity.other.attribute-name"
-              "keyword"
-              "markup.underline.link"
-              "storage.modifier"
-              "storage.type"
-              "string.url"
-              "variable.language.super"
-              "variable.language.this"
-            ];
-            "settings" = {"fontStyle" = "italic";};
-          }
-          {
-            "name" = "One Dark italic reset";
-            "scope" = [
-              "keyword.operator"
-              "keyword.other.type"
-              "storage.modifier.import"
-              "storage.modifier.package"
-              "storage.type.built-in"
-              "storage.type.function.arrow"
-              "storage.type.generic"
-              "storage.type.java"
-              "storage.type.primitive"
-            ];
-            "settings" = {"fontStyle" = "";};
-          }
-          {
-            "name" = "One Dark bold italic";
-            "scope" = ["keyword.other.important"];
-            "settings" = {"fontStyle" = "bold italic";};
+            name = "mypy-type-checker";
+            publisher = "ms-python";
+            version = "2023.2.0";
+            sha256 = "KIaXl7SBODzoJQM9Z1ZuIS5DgEKtv/CHDWJ8n8BAmtU=";
           }
         ];
+
+      userSettings = {
+        # Much of the following adapted from https://github.com/LunarVim/LunarVim/blob/4625145d0278d4a039e55c433af9916d93e7846a/utils/vscode_config/settings.json
+        "editor.tabSize" = 2;
+        "editor.fontLigatures" = true;
+        "editor.guides.indentation" = false;
+        "editor.insertSpaces" = true;
+        "editor.fontFamily" = "'Hasklug Nerd Font', 'JetBrainsMono Nerd Font', 'FiraCode Nerd Font','SF Mono', Menlo, Monaco, 'Courier New', monospace";
+        "editor.fontSize" = 12;
+        "editor.formatOnSave" = true;
+        "editor.suggestSelection" = "first";
+        "editor.scrollBeyondLastLine" = false;
+        "editor.cursorBlinking" = "solid";
+        "editor.minimap.enabled" = false;
+        "[nix]"."editor.tabSize" = 2;
+        "[svelte]"."editor.defaultFormatter" = "svelte.svelte-vscode";
+        "[jsonc]"."editor.defaultFormatter" = "esbenp.prettier-vscode";
+        "[typescript]"."editor.defaultFormatter" = "esbenp.prettier-vscode";
+        "extensions.ignoreRecommendations" = false;
+        "files.insertFinalNewline" = true;
+        "[scala]"."editor.tabSize" = 2;
+        "[json]"."editor.tabSize" = 2;
+        "vim.highlightedyank.enable" = true;
+        "files.trimTrailingWhitespace" = true;
+        "gitlens.codeLens.enabled" = false;
+        "gitlens.currentLine.enabled" = false;
+        "gitlens.hovers.currentLine.over" = "line";
+        "vsintellicode.modify.editor.suggestSelection" = "automaticallyOverrodeDefaultValue";
+        "java.semanticHighlighting.enabled" = true;
+        "workbench.editor.showTabs" = true;
+        "workbench.list.automaticKeyboardNavigation" = false;
+        "workbench.activityBar.visible" = false;
+        #"workbench.colorTheme" = "Dracula";
+        "workbench.colorTheme" = "One Dark";
+        "workbench.iconTheme" = "material-icon-theme";
+        "editor.accessibilitySupport" = "off";
+        "oneDark.bold" = true;
+        "window.zoomLevel" = 1;
+        "window.menuBarVisibility" = "toggle";
+        #"terminal.integrated.shell.linux" = "${pkgs.zsh}/bin/zsh";
+
+        "svelte.enable-ts-plugin" = true;
+        "javascript.inlayHints.functionLikeReturnTypes.enabled" = true;
+        "javascript.referencesCodeLens.enabled" = true;
+        "javascript.suggest.completeFunctionCalls" = true;
+
+        "editor.tokenColorCustomizations" = {
+          "textMateRules" = [
+            {
+              "name" = "One Dark bold";
+              "scope" = [
+                "entity.name.function"
+                "entity.name.type.class"
+                "entity.name.type.module"
+                "entity.name.type.namespace"
+                "keyword.other.important"
+              ];
+              "settings" = {"fontStyle" = "bold";};
+            }
+            {
+              "name" = "One Dark italic";
+              "scope" = [
+                "comment"
+                "entity.other.attribute-name"
+                "keyword"
+                "markup.underline.link"
+                "storage.modifier"
+                "storage.type"
+                "string.url"
+                "variable.language.super"
+                "variable.language.this"
+              ];
+              "settings" = {"fontStyle" = "italic";};
+            }
+            {
+              "name" = "One Dark italic reset";
+              "scope" = [
+                "keyword.operator"
+                "keyword.other.type"
+                "storage.modifier.import"
+                "storage.modifier.package"
+                "storage.type.built-in"
+                "storage.type.function.arrow"
+                "storage.type.generic"
+                "storage.type.java"
+                "storage.type.primitive"
+              ];
+              "settings" = {"fontStyle" = "";};
+            }
+            {
+              "name" = "One Dark bold italic";
+              "scope" = ["keyword.other.important"];
+              "settings" = {"fontStyle" = "bold italic";};
+            }
+          ];
+        };
       };
     };
   };
