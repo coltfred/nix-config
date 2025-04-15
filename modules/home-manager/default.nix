@@ -44,6 +44,7 @@
     slackdump
     raycast
     obsidian
+    git-lfs
   ];
 
   # below is to make compiling tools/projects without dedicated nix environments more likely to succeed
