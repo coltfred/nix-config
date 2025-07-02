@@ -1,4 +1,5 @@
 { config, pkgs, ... }: {
+  system.primaryUser = "colt";
   system.defaults = {
     #
     # `man configuration.nix` on mac is useful in seeing available options
@@ -31,14 +32,6 @@
       ActuationStrength = 0;
       # enable tap to click
       Clicking = true;
-    };
-
-    # firewall settings
-    alf = {
-      # 0 = disabled 1 = enabled 2 = blocks all connections except for essential services
-      globalstate = 1;
-      loggingenabled = 0;
-      stealthenabled = 1;
     };
 
     # dock settings
@@ -105,4 +98,10 @@
     };
   };
 
+  # firewall settings
+  networking.applicationFirewall = {
+    enable = true;
+    blockAllIncoming = false;
+    enableStealthMode = true;
+  };
 }

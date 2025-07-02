@@ -379,7 +379,7 @@ in {
     completionInit = ''
       autoload -U compinit
     '';
-    initExtra = ''
+    initContent = ''
       # Setup preferred key bindings that emulate the parts of
       # emacs-style input manipulation that I'm familiar with
       bindkey '^P' up-history
