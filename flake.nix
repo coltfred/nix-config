@@ -13,7 +13,7 @@
     darwin.inputs.nixpkgs.follows = "nixpkgs-unstable";
     home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    ironhide.url = "git+ssh://git@github.com/IronCoreLabs/ironhide-rs?ref=main";
+    ironhide.url = "git+ssh://git@github.com/IronCoreLabs/ironhide?ref=main";
   };
 
   outputs = inputs @ {
@@ -55,7 +55,7 @@
             (
               _: prev: {
                 ironhide =
-                  inputs.ironhide.packages.${prev.stdenv.system}.ironhide-rs;
+                  inputs.ironhide.packages.${prev.stdenv.system}.ironhide;
               }
             )
           ];

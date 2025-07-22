@@ -12,7 +12,6 @@
     taps = [
       "homebrew/bundle"
       "homebrew/cask"
-      "homebrew/cask-fonts"
       "homebrew/core"
       "homebrew/services"
       "homebrew/cask-drivers" # for flipper zero

@@ -155,7 +155,7 @@ in {
     vistafonts # needed for msoffice
   ];
 
-  nix.package = pkgs.nixVersions.nix_2_26;
+  nix.package = pkgs.nixVersions.nix_2_28;
   nix.nixPath = ["darwin=/etc/${config.environment.etc.darwin.target}"];
   nix.extraOptions = ''
     extra-platforms = x86_64-darwin aarch64-darwin

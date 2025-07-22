@@ -37,6 +37,7 @@
     pstree
     btop
     openjdk17
+    pkgs.openscad-unstable
     pkgs.ironhide
     yaml2json
     vault
@@ -423,8 +424,8 @@ in {
       ll = "eza --icons --git-ignore --git -F --extended -l";
       lt = "eza --icons --git-ignore --git -F --extended -T";
       llt = "eza --icons --git-ignore --git -F --extended -l -T";
-      dwupdate = "pushd ~/.config/nixpkgs ; nix flake update ; /opt/homebrew/bin/brew update; popd ; pushd ~; darwin-rebuild switch --flake ~/.config/nixpkgs/.#$(hostname -s); /opt/homebrew/bin/brew upgrade ; /opt/homebrew/bin/brew upgrade --cask; popd";
-      dwswitch = "pushd ~; darwin-rebuild switch --flake ~/.config/nixpkgs/.#$(hostname -s); popd";
+      dwupdate = "pushd ~/.config/nixpkgs ; nix flake update ; /opt/homebrew/bin/brew update; popd ; pushd ~; sudo   darwin-rebuild switch --flake ~/.config/nixpkgs/.#$(hostname -s); /opt/homebrew/bin/brew upgrade ; /opt/homebrew/bin/brew upgrade --cask; popd";
+      dwswitch = "pushd ~; sudo darwin-rebuild switch --flake ~/.config/nixpkgs/.#$(hostname -s); popd";
     };
   };
 
