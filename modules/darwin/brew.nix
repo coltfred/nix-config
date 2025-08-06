@@ -14,7 +14,6 @@
       "homebrew/cask"
       "homebrew/core"
       "homebrew/services"
-      "homebrew/cask-drivers" # for flipper zero
       "fujiapple852/trippy"
     ];
 

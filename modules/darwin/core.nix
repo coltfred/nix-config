@@ -161,6 +161,11 @@ in {
     extra-platforms = x86_64-darwin aarch64-darwin
   '';
 
+  services.tailscale = {
+    enable = true;
+    # overrideLocalDns = true;
+  };
+
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
   system.stateVersion = 4;
