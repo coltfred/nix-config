@@ -210,6 +210,12 @@ in {
             version = "1.1.0";
             sha256 = "sha256-bAdMQxefeqedBdLiYqFBbuSN0auKAs4SKnrqK9/m65c=";
           }
+          {
+            name = "explorer";
+            publisher = "vitest";
+            version = "1.28.2";
+            sha256 = "sha256-r1KCT6UYgoCPRRxy+dmJLkwUW2yRixBwfYra4kSJYB0=";
+          }
         ]
         # These are for python dev
         ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [

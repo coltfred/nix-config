@@ -113,7 +113,6 @@
   ".builds"
   ".bundle"
   ".cache"
-  ".cargo"
   ".classpath"
   ".com.apple.timemachine.donotpresent"
   ".coverage"
@@ -253,5 +252,4 @@
   "~$*"
   "~/.config/pianobar/config"
   "~/.gitignore"
-  ".cargo"
 ]
