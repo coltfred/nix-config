@@ -360,8 +360,13 @@ in {
   };
   programs.ssh = {
     enable = true;
-    compression = true;
-    controlMaster = "auto";
+    enableDefaultConfig = false;
+    matchBlocks = {
+      "*" = {
+        compression = true;
+        controlMaster = "auto";
+      };
+    };
     includes = ["*.conf"];
     extraConfig = ''
       AddKeysToAgent yes
@@ -430,8 +435,8 @@ in {
       ll = "eza --icons --git-ignore --git -F --extended -l";
       lt = "eza --icons --git-ignore --git -F --extended -T";
       llt = "eza --icons --git-ignore --git -F --extended -l -T";
-      dwupdate = "pushd ~/.config/nixpkgs ; nix flake update ; /opt/homebrew/bin/brew update; popd ; pushd ~; darwin-rebuild switch --flake ~/.config/nixpkgs/.#$(hostname -s); /opt/homebrew/bin/brew upgrade ; /opt/homebrew/bin/brew upgrade --cask; popd";
-      dwswitch = "pushd ~; darwin-rebuild switch --flake ~/.config/nixpkgs/.#$(hostname -s); popd";
+      dwupdate = "pushd ~/.config/nixpkgs; nix flake update; /opt/homebrew/bin/brew update; /opt/homebrew/bin/brew upgrade; /opt/homebrew/bin/brew upgrade --cask; popd";
+      dwswitch = "pushd ~; sudo darwin-rebuild switch --flake ~/.config/nixpkgs/.#$(hostname -s) ; popd";
     };
   };
 
@@ -442,40 +447,40 @@ in {
 
   programs.git = {
     enable = true;
-    userName = "Colt Frederickson";
-    userEmail = "coltfred@gmail.com";
-    aliases = {
-      cb = "!f() { git checkout -b $1 && git push --set-upstream origin $1; }; f";
-      pp = "!echo 'Pulling' && git pull && echo '' && echo 'Pushing' && git push";
-      gone = ''
-        ! git fetch -p && git for-each-ref --format '%(refname:short) %(upstream:track)' | awk '$2 == "[gone]" {print $1}' | xargs -r git branch -D'';
-      tatus = "status";
-      co = "checkout";
-      br = "branch";
-      st = "status -sb";
-      wtf = "!git-wtf";
-      lg = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --topo-order --date=relative";
-      gl = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --topo-order --date=relative";
-      lp = "log -p";
-      lr = "reflog";
-      ls = "ls-files";
-      dall = "diff";
-      d = "diff --relative";
-      dv = "difftool";
-      df = "diff --relative --name-only";
-      dvf = "difftool --relative --name-only";
-      dfall = "diff --name-only";
-      ds = "diff --relative --name-status";
-      dvs = "difftool --relative --name-status";
-      dsall = "diff --name-status";
-      dvsall = "difftool --name-status";
-      dr = "diff-index --cached --name-only --relative HEAD";
-      di = "diff-index --cached --patch --relative HEAD";
-      dfi = "diff-index --cached --name-only --relative HEAD";
-      subpull = "submodule foreach git pull";
-      subco = "submodule foreach git checkout master";
-    };
-    extraConfig = {
+    settings = {
+      user = {
+        name = "Colt Frederickson";
+        email = "coltfred@gmail.com";
+      };
+      alias = {
+        cb = "!f() { git checkout -b $1 && git push --set-upstream origin $1; }; f";
+        pp = "!echo 'Pulling' && git pull && echo '' && echo 'Pushing' && git push";
+        gone = ''
+          ! git fetch -p && git for-each-ref --format '%(refname:short) %(upstream:track)' | awk '$2 == "[gone]" {print $1}' | xargs -r git branch -D'';
+        tatus = "status";
+        co = "checkout";
+        br = "branch";
+        st = "status -sb";
+        wtf = "!git-wtf";
+        lg = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --topo-order --date=relative";
+        gl = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --topo-order --date=relative";
+        lp = "log -p";
+        lr = "reflog";
+        ls = "ls-files";
+        dall = "diff";
+        d = "diff --relative";
+        dv = "difftool";
+        df = "diff --relative --name-only";
+        dvf = "difftool --relative --name-only";
+        dfall = "diff --name-only";
+        ds = "diff --relative --name-status";
+        dvs = "difftool --relative --name-status";
+        dsall = "diff --name-status";
+        dvsall = "difftool --name-status";
+        dr = "diff-index --cached --name-only --relative HEAD";
+        di = "diff-index --cached --patch --relative HEAD";
+        dfi = "diff-index --cached --name-only --relative HEAD";
+      };
       github.user = "coltfred";
       color.ui = true;
       pull.rebase = true;
@@ -491,20 +496,21 @@ in {
       protocol.version = "2";
       core.commitGraph = true;
       gc.writeCommitGraph = true;
+      push.autoSetupRemote = true;
     };
-    delta = {
-      enable = true;
-      options = {
-        syntax-theme = "Monokai Extended";
-        line-numbers = true;
-        navigate = true;
-        side-by-side = true;
-      };
-    };
-    #ignores = [ ".cargo" ];
     ignores = import ./dotfiles/gitignore.nix;
   };
 
+
+  programs.delta = {
+    enable = true;
+    options = {
+      syntax-theme = "Monokai Extended";
+      line-numbers = true;
+      navigate = true;
+      side-by-side = true;
+    };
+  };
   programs.alacritty = {
     package =
       pkgs.stable.alacritty; # added 2022-11-02 because of mesa build break TODO: remove

@@ -21,7 +21,7 @@
       "amethyst" # for window tiling -- I miss chunkwm but it's successor, yabai, was unstable.
       "blackhole-2ch" # for recording output from speakers
       "discord"
-      "docker"
+      "docker-desktop"
       "firefox"
       "focusrite-control"
       "gpg-suite"

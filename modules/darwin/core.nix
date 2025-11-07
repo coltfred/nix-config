@@ -152,7 +152,6 @@ in {
     raleway
     vegur
     noto-fonts
-    vistafonts # needed for msoffice
   ];
 
   nix.package = pkgs.nixVersions.nix_2_28;
