@@ -41,6 +41,6 @@
       "Slack" = 803453959;
       "Xcode" = 497799835;
     };
-    brews = [ "pam-reattach" "chkrootkit" "trippy"];
+    brews = [ "pam-reattach" "chkrootkit" "trippy" "gh"];
   };
 }
