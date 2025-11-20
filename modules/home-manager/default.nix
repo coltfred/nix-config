@@ -197,7 +197,8 @@ in {
           davidanson.vscode-markdownlint
           pkief.material-icon-theme
           dracula-theme.theme-dracula
-          eamodio.gitlens # for git blame
+          # Broken on 11/20/25
+          # eamodio.gitlens # for git blame
           humao.rest-client
           mkhl.direnv
           redhat.java
