@@ -46,6 +46,7 @@
     raycast
     obsidian
     git-lfs
+    wireguard-tools
   ];
 
   # below is to make compiling tools/projects without dedicated nix environments more likely to succeed
@@ -548,7 +549,8 @@ in {
         front_end = "WebGpu",
         hide_tab_bar_if_only_one_tab = true,
         scrollback_lines = 15000,
-        window_background_opacity = 0.7
+        window_background_opacity = 0.7,
+        audible_bell = "Disabled"
       }
     '';
   };
