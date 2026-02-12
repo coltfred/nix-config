@@ -63,7 +63,7 @@
     openssl # also needed by many things
   ];
   # using unstable in my home profile for nix commands
-  nixEditorPkgs = with pkgs; [statix nixfmt-classic pkgs.fmt];
+  nixEditorPkgs = with pkgs; [statix nixfmt pkgs.fmt];
   # live dangerously here with unstable
   rustPkgs = with pkgs; [cargo rustfmt rust-analyzer rustc];
   # live dangerously here with unstable
@@ -105,6 +105,8 @@ in {
     ++ rustPkgs
     ++ typescriptPkgs
     ++ networkPkgs;
+
+  home.sessionPath = ["$HOME/bin"];
 
   home.sessionVariables = {
     LANG = "en_US.UTF-8";
