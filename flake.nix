@@ -58,6 +58,14 @@
                   inputs.ironhide.packages.${prev.stdenv.system}.ironhide;
               }
             )
+            # Manifold's test suite traps on darwin (see nixpkgs#417728).
+            # Disable tests so openscad-unstable can build.
+            (_: prev: {
+              manifold = prev.manifold.overrideAttrs (_: {
+                doCheck = false;
+                doInstallCheck = false;
+              });
+            })
           ];
         };
         specialArgs = {
@@ -65,7 +73,7 @@
         };
         modules = [
           ./modules/darwin
-          {homebrew.brewPrefix = "/opt/homebrew/bin";}
+          {homebrew.prefix = "/opt/homebrew";}
           home-manager.darwinModules.home-manager
           {
             home-manager = {

@@ -158,6 +158,7 @@ in {
   nix.nixPath = ["darwin=/etc/${config.environment.etc.darwin.target}"];
   nix.extraOptions = ''
     extra-platforms = x86_64-darwin aarch64-darwin
+    download-buffer-size = 524288000
   '';
 
   services.tailscale = {

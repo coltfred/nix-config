@@ -365,16 +365,12 @@ in {
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
-    matchBlocks = {
-      "*" = {
-        compression = true;
-        controlMaster = "auto";
-      };
+    settings = {
+      Compression = true;
+      ControlMaster = "auto";
+      AddKeysToAgent = "yes";
     };
     includes = ["*.conf"];
-    extraConfig = ''
-      AddKeysToAgent yes
-    '';
   };
 
   programs.zsh = {

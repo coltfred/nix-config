@@ -114,6 +114,8 @@
   ".bundle"
   ".cache"
   ".classpath"
+  ".claude"
+  ".claude/"
   ".com.apple.timemachine.donotpresent"
   ".coverage"
   ".coverage.*"
